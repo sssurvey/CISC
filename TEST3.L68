@@ -1,0 +1,48 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 12/10/2015 9:34:40 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:
+00001000                             9  
+00001000                            10  
+00001000                            11  
+00001000                            12  
+00001000  223C 00002313             13  AGAIN    MOVE.L #$2313, D1
+00001006  327C 2000                 14           MOVE.W #$2000, A1
+0000100A  2281                      15           MOVE.L D1, (A1)
+0000100C  243C 00002313             16           MOVE.L #$2313, D2
+00001012  9751                      17           SUB D3, (A1)
+00001014  6700 0006                 18           BEQ DONE
+00001018  4EF8 1000                 19           JMP AGAIN
+0000101C                            20           
+0000101C  5246                      21  DONE     ADDI #1, D6
+0000101E                            22  
+0000101E                            23  
+0000101E                            24  
+0000101E                            25               
+0000101E                            26  
+0000101E                            27  * Put program code here
+0000101E                            28  
+0000101E  FFFF FFFF                 29      SIMHALT             ; halt simulator
+00001022                            30  
+00001022                            31  * Put variables and constants here
+00001022                            32  
+00001022                            33      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+AGAIN               1000
+DONE                101C
+START               1000

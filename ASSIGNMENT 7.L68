@@ -1,0 +1,82 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 10/27/2015 9:20:37 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : Assignment 8
+00000000                             3  * Written by : Haomin Shi
+00000000                             4  * Date       : 10/27/2015
+00000000                             5  * Description: A program for lab 8
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  START:
+00000600                             8      ORG    $600
+00000600                             9  DATA1 DS.B 1
+00000601                            10  DATA2 DS.B 1
+00000602                            11  DATA3 DS.B 1
+00000603                            12  DATA4 DS.B 1
+00000604                            13  DATA5 DS.B 1
+00000605                            14  DATA6 DS.B 1
+00000606                            15  DATA7 DS.B 1
+00000607                            16  DATA8 DS.B 1
+00000608                            17  DATA9 DS.B 1
+00000609                            18  DATA10 DS.B 1
+0000060A                            19  DATA11 DS.B 1
+0000060B                            20  DATA12 DS.B 1
+0000060C                            21  DATA13 DS.B 1
+0000060D                            22  DATA14 DS.B 1
+0000060E                            23  DATA15 DS.B 1 ;CREATE LABLES FOR ALL THE DATA   
+00000800                            24      ORG    $800
+00000800  307C 0600                 25      MOVE.W #$600,A0 ;SET UP THE A0 MEMLOCATION, FOR FUTURE USE
+00000804  11FC 000D 0600            26      MOVE.B #13, DATA1
+0000080A  11FC 000E 0601            27      MOVE.B #14, DATA2
+00000810  11FC 0049 0602            28      MOVE.B #73, DATA3
+00000816  11FC 0018 0603            29      MOVE.B #24, DATA4
+0000081C  11FC 003F 0604            30      MOVE.B #63, DATA5
+00000822  11FC 004A 0605            31      MOVE.B #74, DATA6
+00000828  11FC 0019 0606            32      MOVE.B #25, DATA7
+0000082E  11FC 001A 0607            33      MOVE.B #26, DATA8
+00000834  11FC 001C 0608            34      MOVE.B #28, DATA9
+0000083A  11FC 0015 0609            35      MOVE.B #21, DATA10
+00000840  11FC 001A 060A            36      MOVE.B #26, DATA11
+00000846  11FC 000C 060B            37      MOVE.B #12, DATA12
+0000084C  11FC 000A 060C            38      MOVE.B #10, DATA13
+00000852  11FC 0013 060D            39      MOVE.B #19, DATA14
+00000858  11FC 000D 060E            40      MOVE.B #13, DATA15 ;MOVE NUMBERS TO LOCATION
+0000085E                            41  *FIRST LINE OF REAL CODE
+0000085E  143C 000F                 42      MOVE.B #15,D2 ;USE D1 AS COUNTER
+00000862  1218                      43  SUM MOVE.B (A0)+,D1 ;A0 LOCATION MOVE TO D1, +1 EACH LOOP
+00000864  D041                      44      ADD D1,D0 ;ADDITION SAVE SUM @ D0
+00000866  5302                      45      SUBQ.B #1,D2 ;-1 FOR THE SAKE OF LOOP
+00000868  66F8                      46      BNE SUM ;BRANCH SUM
+0000086A  3600                      47      MOVE.W D0, D3
+0000086C  86FC 000F                 48      DIVU #15,D3
+00000870  21C3 0650                 49      MOVE.L D3, $650
+00000874  11F8 0651 0741            50      MOVE.B $651, $741
+0000087A  11F8 0653 0740            51      MOVE.B $653, $740
+00000880  FFFF FFFF                 52      SIMHALT             
+00000884                            53      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DATA1               600
+DATA10              609
+DATA11              60A
+DATA12              60B
+DATA13              60C
+DATA14              60D
+DATA15              60E
+DATA2               601
+DATA3               602
+DATA4               603
+DATA5               604
+DATA6               605
+DATA7               606
+DATA8               607
+DATA9               608
+START               0
+SUM                 862

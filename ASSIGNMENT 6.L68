@@ -1,0 +1,69 @@
+00002000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 10/14/2015 1:48:10 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : ASSIGNMENT 6
+00000000                             3  * Written by : HAOMIN SHI
+00000000                             4  * Date       : 10/13/2015
+00000000                             5  * Description: A set of word length numbers are stored in memory
+00000000                             6  *              location starting at address $500. The count of
+00000000                             7  *              these numbers is located in D0. Write a subroutine
+00000000                             8  *              to store the smallest number at memory location 
+00000000                             9  *              specified in A0
+00000000                            10  *-----------------------------------------------------------
+00002000                            11      ORG    $2000
+00002000                            12  START:
+00002000                            13  
+00002000  363C 0003                 14      MOVE.W #0003,D3
+00002004  383C 0003                 15      MOVE.W #0003,D4
+00002008  307C 1000                 16      MOVE.W #$1000,A0 ;SET MEMORY IN A0
+0000200C  31FC 0016 0500            17      MOVE.W #22,$0500
+00002012  31FC 0017 0502            18      MOVE.W #23,$0502
+00002018  31FC 0018 0504            19      MOVE.W #24,$0504
+0000201E  31FC 0019 0506            20      MOVE.W #25,$0506                  ; MOVE A SET OF NUMBER OF WORD LENTH TO ML STARTS 500
+00002024  327C 0500                 21      MOVEA.W #$0500,A1 ;MOVE THE ADDRESS TO A1 TO CALC
+00002028                            22      
+00002028                            23      
+00002028                            24      *SUBROUTINE 1 - THIS SUBROUTINE IS FOR CALC THE SUM OF THE SET OF NUMBERS
+00002028  D059                      25  LOOP1 ADD.W (A1)+,D0
+0000202A  5343                      26       SUB.W #1,D3    ;USE D3 AS THE COUNTER, THUS I WILL SET D3 AS 3
+0000202C  66FA                      27       BNE LOOP1       ;LOOP ENDS WHEN ADDED ALL NUMBERS RESULT IS IN D0
+0000202E                            28  
+0000202E                            29       
+0000202E                            30       
+0000202E  367C 0506                 31       MOVEA.W #$0506,A3 ;SET A-R READY FOR COUNTING
+00002032                            32       
+00002032                            33      *SUBROUTINE 2 - THIS IS TO CALC THE SMALLEST NUMBER, AND WILL SAVE THE NUMBER IN A0
+00002032  3E38 0506                 34        MOVE.W $0506,D7
+00002036                            35      
+00002036  BE63                      36  LOOP2 CMP -(A3),D7
+00002038  6E00 0008                 37        BGT MOVE1
+0000203C  4EF9 00002044             38        JMP MOVE2
+00002042                            39  
+00002042  3E13                      40  MOVE1 MOVE.W (A3),D7
+00002044                            41  
+00002044  5344                      42  MOVE2 SUB.W #1,D4
+00002046  66EE                      43        BNE LOOP2
+00002048                            44        
+00002048  66EC                      45       BNE LOOP2 ;LOOP IF SOMETHING IS NOT LESS THEN THE OTHER
+0000204A                            46       
+0000204A                            47      
+0000204A  3087                      48  DONE MOVE.W D7,(A0)
+0000204C                            49  
+0000204C  FFFF FFFF                 50      SIMHALT          
+00002050                            51      END    START       
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DONE                204A
+LOOP1               2028
+LOOP2               2036
+MOVE1               2042
+MOVE2               2044
+START               2000

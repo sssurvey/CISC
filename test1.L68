@@ -1,0 +1,59 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 12/10/2015 9:13:48 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : final prac
+00000000                             3  * Written by : haomin shi  
+00000000                             4  * Date       : day before the final
+00000000                             5  * Description: whatever
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                 
+00001000  5241                       9      ADDI #1, D1
+00001002  0642 0014                 10      ADDI #20, D2 ;SETTING UP THE NUMBER LIMITS
+00001006  0645 0012                 11      ADDI #18, D5
+0000100A                            12      
+0000100A  3602                      13      MOVE.W D2, D3 ; MOVE THE D2 TO D3 FOR CALCULTIONS
+0000100C  3802                      14      MOVE.W D2, D4 ; SEE ABOVE
+0000100E                            15      
+0000100E  3278 2000                 16      MOVE.W $2000, A1 ;MOVE THE MEM LOCATION TO A0
+00001012                            17      *NOW THE MEM, LOWER AND HIGHER LIMTS ARE ALL SET
+00001012                            18      *I WILL CREATE AN WHILE LOOP TO LOOP
+00001012  9242                      19      SUB D2,D1 ; SUB TO GETVALUE
+00001014                            20      *NOW THE LOOP VALUE HAVE BEEN SET
+00001014  3C03                      21  LOOP1 MOVE.W D3, D6
+00001016  8AC6                      22        DIVU D6, D5 ;DIVIDE TO GET VALUE
+00001018  4846                      23        SWAP D6 ;SWAP TO CHECK REMINDER
+0000101A  0646 0000                 24        ADDI #0, D6
+0000101E  6700 000A                 25        BEQ LOOP2
+00001022  5243                      26        ADDI #1, D3
+00001024  5342                      27        SUB #1, D2
+00001026  4EF8 1014                 28        JMP LOOP1
+0000102A                            29        
+0000102A                            30        
+0000102A  34C6                      31  LOOP2 MOVE.W D6, (A2)+ ;SAVE TO MEM
+0000102C  5243                      32        ADDI #1, D3
+0000102E  5342                      33        SUB #1, D2
+00001030                            34        
+00001030                            35  
+00001030                            36  
+00001030                            37  
+00001030                            38  
+00001030                            39  
+00001030  FFFF FFFF                 40      SIMHALT             ; halt simulator
+00001034                            41  
+00001034                            42  * Put variables and constants here
+00001034                            43  
+00001034                            44      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+LOOP1               1014
+LOOP2               102A
+START               1000

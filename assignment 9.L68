@@ -1,0 +1,157 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 11/2/2015 12:37:49 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : Assignment #9
+00000000                             3  * Written by : Haomin Shi
+00000000                             4  * Date       : 11/2
+00000000                             5  * Description: a program that pass passing grades
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  START:
+00006000                             8      ORG $6000
+00006000                             9  T1 DS.W 1
+00006002                            10  T2 DS.W 1
+00006004                            11  T3 DS.W 1
+00006006                            12  T4 DS.W 1
+00006008                            13  T5 DS.W 1
+0000600A                            14  T6 DS.W 1
+0000600C                            15  T7 DS.W 1
+0000600E                            16  T8 DS.W 1
+00006010                            17  T9 DS.W 1
+00006012                            18  T10 DS.W 1
+00006014                            19  T11 DS.W 1
+00006016                            20  T12 DS.W 1
+00006018                            21  T13 DS.W 1
+0000601A                            22  T14 DS.W 1
+0000601C                            23  T15 DS.W 1
+0000601E                            24  T16 DS.W 1
+00006020                            25  T17 DS.W 1
+00006022                            26  T18 DS.W 1
+00006024                            27  T19 DS.W 1
+00006026                            28  T20 DS.W 1 ;CREATE LABELS FOR THE TEST SCORES, THIS WILL BE THE SCORE IN $6000, 20 OF THEM
+00006200                            29      ORG $6200
+00006200                            30  T1F DS.W 1
+00006202                            31  T2F DS.W 1
+00006204                            32  T3F DS.W 1
+00006206                            33  T4F DS.W 1
+00006208                            34  T5F DS.W 1
+0000620A                            35  T6F DS.W 1
+0000620C                            36  T7F DS.W 1
+0000620E                            37  T8F DS.W 1
+00006210                            38  T9F DS.W 1
+00006212                            39  T10F DS.W 1
+00006214                            40  T11F DS.W 1
+00006216                            41  T12F DS.W 1
+00006218                            42  T13F DS.W 1
+0000621A                            43  T14F DS.W 1
+0000621C                            44  T15F DS.W 1
+0000621E                            45  T16F DS.W 1
+00006220                            46  T17F DS.W 1
+00006222                            47  T18F DS.W 1
+00006224                            48  T19F DS.W 1
+00006226                            49  T20F DS.W 1 ;CREATE LABELS FOR THE FAIL SCORES
+00000800                            50      ORG $800
+00000800  31FC 0064 6000            51      MOVE.W #100, T1
+00000806  31FC 004E 6002            52      MOVE.W #78, T2
+0000080C  31FC 0040 6004            53      MOVE.W #64, T3
+00000812  31FC 0021 6002            54      MOVE.W #33, T2
+00000818  31FC 002D 6008            55      MOVE.W #45, T5
+0000081E  31FC 0043 600A            56      MOVE.W #67, T6
+00000824  31FC 0037 600C            57      MOVE.W #55, T7
+0000082A  31FC 0042 600E            58      MOVE.W #66, T8
+00000830  31FC 003C 6010            59      MOVE.W #60, T9
+00000836  31FC 0035 6012            60      MOVE.W #53, T10
+0000083C  31FC 0045 6014            61      MOVE.W #69, T11
+00000842  31FC 0062 6016            62      MOVE.W #98, T12
+00000848  31FC 004F 6018            63      MOVE.W #79, T13
+0000084E  31FC 0050 601A            64      MOVE.W #80, T14
+00000854  31FC 0051 601C            65      MOVE.W #81, T15
+0000085A  31FC 0058 601E            66      MOVE.W #88, T16
+00000860  31FC 005A 6020            67      MOVE.W #90, T17
+00000866  31FC 005E 6022            68      MOVE.W #94, T18
+0000086C  31FC 0022 6024            69      MOVE.W #34, T19
+00000872  31FC 0057 6026            70      MOVE.W #87, T20
+00000878                            71  *FIRST LINE OF REAL CODE 
+00000878  307C 6000                 72      MOVE.W #$6000,A0 ;SET UP THE A0 MEMLOCATION, FOR FUTURE USE
+0000087C  347C 6200                 73      MOVE.W #$6200,A2
+00000880  123C 0014                 74      MOVE.B #20,D1  ;COUNT DOWN
+00000884  143C 0000                 75      MOVE.B #0,D2 ;CALC FINAL
+00000888  163C 0000                 76      MOVE.B #0,D3 ;CALC FAIL
+0000088C                            77      
+0000088C  3818                      78  CALCG MOVE.W (A0)+,D4
+0000088E  0444 0032                 79        SUB.W #50,D4
+00000892  6D00 000E                 80        BLT CALCF ; IF 50-D4 IS LT ZERO JUMP TO CALCF
+00000896  5242                      81        ADD #1,D2 ;CALC PASSING HOW MANY PPL
+00000898  6E00 000C                 82        BGT COUNT
+0000089C  4EF9 000008AE             83        JMP DONE
+000008A2                            84  
+000008A2  5243                      85  CALCF ADD #1,D3 ;CALC FAILING HOW MANY PPL
+000008A4  34D0                      86        MOVE.W (A0),(A2)+ ;MOVE THE FALLING GRADE TO $6200+
+000008A6                            87        
+000008A6  5341                      88  COUNT SUB.W #1,D1 ;COUNTER -1
+000008A8  66E2                      89        BNE CALCG ;IF NOT ZERO JUMP TO CALCG
+000008AA  6700 0002                 90        BEQ DONE
+000008AE                            91  
+000008AE                            92  DONE  
+000008AE                            93          
+000008AE                            94  
+000008AE                            95                 
+000008AE  FFFF FFFF                 96      SIMHALT           
+000008B2                            97  
+000008B2                            98  
+000008B2                            99  
+000008B2                           100      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CALCF               8A2
+CALCG               88C
+COUNT               8A6
+DONE                8AE
+START               0
+T1                  6000
+T10                 6012
+T10F                6212
+T11                 6014
+T11F                6214
+T12                 6016
+T12F                6216
+T13                 6018
+T13F                6218
+T14                 601A
+T14F                621A
+T15                 601C
+T15F                621C
+T16                 601E
+T16F                621E
+T17                 6020
+T17F                6220
+T18                 6022
+T18F                6222
+T19                 6024
+T19F                6224
+T1F                 6200
+T2                  6002
+T20                 6026
+T20F                6226
+T2F                 6202
+T3                  6004
+T3F                 6204
+T4                  6006
+T4F                 6206
+T5                  6008
+T5F                 6208
+T6                  600A
+T6F                 620A
+T7                  600C
+T7F                 620C
+T8                  600E
+T8F                 620E
+T9                  6010
+T9F                 6210

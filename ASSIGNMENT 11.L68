@@ -1,0 +1,201 @@
+000020B6 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 11/11/2015 12:45:59 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : ASSIGNMENT 11
+00000000                             3  * Written by : HAOMIN SHI
+00000000                             4  * Date       : 11/10/2015
+00000000                             5  * Description: THIS IS A PROGRAM THAT ASK USER TO IMPUT DATA, SORT DATA,
+00000000                             6  *              SAVE DATA, DISPLAY DATA.
+00000000                             7  *-----------------------------------------------------------
+00002000                             8      ORG    $2000
+00002000                             9      
+00002000= 50 4C 41 45 53 45 ...     10  LINE1 DC.B 'PLAESE INPUT: ',0
+0000200F= 54 4F 54 41 4C 20 ...     11  LINE2 DC.B 'TOTAL NUMBER OF STUDENT: ',0
+00002029= 54 4F 54 41 4C 20 ...     12  LINE3 DC.B 'TOTAL NUMBER OF FAIL STUDENT: ',0
+00002048= 54 4F 54 41 4C 20 ...     13  LINE4 DC.B 'TOTAL NUMBER OF PASS STUDENT: ',0
+00002067= 41 56 47 20 4F 46 ...     14  LINE5 DC.B 'AVG OF ALL PASSING SCORES: ',0
+00002083= 41 56 47 20 4F 46 ...     15  LINE6 DC.B 'AVG OF ALL FAILING SCORES: ',0
+0000209F= 41 56 47 20 4F 46 ...     16  LINE7 DC.B 'AVG OF ALL SCORES: ',0
+000020B3= 0D 0A 00                  17  pmt dc.b $d,$a,'',0
+000020B6                            18  
+000020B6                            19  
+000020B6                            20          
+000020B6                            21   
+000020B6                            22  START:
+000020B6  363C 0014                 23          MOVE.W #20, D3 *INPUT LOOP COUNTER
+000020BA  347C 0100                 24          MOVE.W #$100, A2
+000020BE  367C 0400                 25          MOVE.W #$400, A3 *FAIL ADDRESS
+000020C2  3A7C 0600                 26          MOVE.W #$600, A5 *PASS ADDRESS
+000020C6  383C 0032                 27          MOVE.W #50, D4
+000020CA  387C 0100                 28          MOVE.W #$100, A4
+000020CE  3A3C 0014                 29          MOVE.W #20, D5
+000020D2                            30      
+000020D2                            31  
+000020D2  43F8 2000                 32  LOOPIN  LEA LINE1,A1 *LOAD LINE IN TO A1 REG
+000020D6                            33          
+000020D6  103C 000E                 34          MOVE.B #14,D0 *DISPLAY 
+000020DA  4E4F                      35          TRAP #15
+000020DC                            36          
+000020DC  103C 0004                 37          MOVE.B #4,D0 *REQUEST FOR IN
+000020E0  4E4F                      38          TRAP #15
+000020E2                            39          
+000020E2  34C1                      40          MOVE.W D1, (A2)+ *MOVE THE INPUT TO A ADDRESS, WAITING FOR FURTHER NOTICE
+000020E4  5343                      41          SUB #1, D3
+000020E6  66EA                      42          BNE LOOPIN
+000020E8                            43          
+000020E8                            44          
+000020E8  3E3C 0000                 45          MOVE.W #0, D7 *PASS COUNTER
+000020EC  343C 0000                 46          MOVE.W #0, D2 *FAIL COUNTER
+000020F0                            47          
+000020F0                            48  
+000020F0  3C1C                      49  LOOPSR  MOVE.W (A4)+, D6 *A SORT LOOP SORT THE, DEFINE PASSING AND FAILING
+000020F2  9C04                      50          SUB.B D4, D6     *COMPARE SCORE, WHETHER >50 OR <50
+000020F4  6D00 0006                 51          BLT FAIL           
+000020F8  6C00 0014                 52          BGE PASS
+000020FC                            53          
+000020FC  0646 0032                 54  FAIL    ADD #50, D6
+00002100  5242                      55          ADD #1,D2
+00002102  36C6                      56          MOVE.W D6, (A3)+    *FAIL STUDENT SCORE WILL BE IN MEM 400+
+00002104  5345                      57          SUB #1,D5           *LOOP TIMES CALCULATE
+00002106  6700 0018                 58          BEQ STOP            *IF LOOP END JUMP TO NEXT STEP
+0000210A  4EF8 20F0                 59          JMP LOOPSR          *IF THERE ARE STILL SCORES, JUMP TO LOOPSR TO SORT
+0000210E  0646 0032                 60  PASS    ADD #50, D6
+00002112  5247                      61          ADD #1,D7
+00002114  3AC6                      62          MOVE.W D6, (A5)+    *PASS STUDENT SCORE WILL BE IN MEM 600+
+00002116  5345                      63          SUB #1,D5           *LOOP TIMES CALCULATE
+00002118  6700 0006                 64          BEQ STOP            
+0000211C  4EF8 20F0                 65          JMP LOOPSR
+00002120                            66         
+00002120                            67          
+00002120  43F8 200F                 68  STOP    LEA LINE2,A1 *LOAD LINE IN TO A1 REG
+00002124  103C 000E                 69          MOVE.B #14,D0 *DISPLAY 
+00002128  4E4F                      70          TRAP #15
+0000212A  323C 0014                 71          MOVE.W #20,D1 *just going to display 20 since there are going to be 20 input
+0000212E  103C 0003                 72          MOVE.B #3,D0 *DISPLAY 
+00002132  4E4F                      73          TRAP #15
+00002134  43F8 20B3                 74          LEA PMT,A1  *CHANGE OUTPUT LINE
+00002138  103C 000E                 75          MOVE.B #14,D0
+0000213C  4E4F                      76          TRAP #15
+0000213E                            77          
+0000213E  43F8 2029                 78          LEA LINE3,A1 *LOAD LINE IN TO A1 REG 'FAIL'
+00002142  103C 000E                 79          MOVE.B #14,D0 *DISPLAY 
+00002146  4E4F                      80          TRAP #15
+00002148                            81          
+00002148                            82          
+00002148  3202                      83          MOVE.W D2, D1 *FAIL PPL -----D2
+0000214A  103C 0003                 84          MOVE.B #3,D0
+0000214E  4E4F                      85          TRAP #15
+00002150  43F8 20B3                 86          LEA PMT,A1  *CHANGE OUTPUT LINE
+00002154  103C 000E                 87          MOVE.B #14,D0 
+00002158  4E4F                      88          TRAP #15
+0000215A                            89          
+0000215A                            90          *PASS PPL-----D7
+0000215A  43F8 2048                 91          LEA LINE4,A1 *LOAD LINE IN TO A1 REG
+0000215E  103C 000E                 92          MOVE.B #14,D0 *DISPLAY 
+00002162  4E4F                      93          TRAP #15
+00002164  3207                      94          MOVE.W D7,D1
+00002166  103C 0003                 95          MOVE.B #3,D0 
+0000216A  4E4F                      96          TRAP #15
+0000216C                            97          
+0000216C  43F8 20B3                 98          LEA PMT,A1  *CHANGE OUTPUT LINE
+00002170  103C 000E                 99          MOVE.B #14,D0 
+00002174  4E4F                     100          TRAP #15
+00002176                           101          
+00002176                           102          * NOW CALC AVAGE
+00002176                           103          
+00002176                           104          
+00002176                           105          *REUSE ALL D REG AND A REG
+00002176  367C 0400                106          MOVE.W #$400, A3 *F
+0000217A  3A7C 0600                107          MOVE.W #$600, A5 *P
+0000217E  3602                     108          MOVE.W D2, D3 *NUMBER OF FAIL
+00002180  3403                     109          MOVE.W D3, D2 *BKUP
+00002182  3807                     110          MOVE.W D7, D4 *NUMBER OF PASS
+00002184                           111          *D5,6,7 FREE
+00002184                           112          
+00002184                           113          * ALL AVG OF PASS
+00002184  DA5B                     114  LOP4F   ADD (A3)+, D5
+00002186  5342                     115          SUB #1, D2 *SUB 4 LOOP
+00002188  66FA                     116          BNE LOP4F
+0000218A  86C5                     117          DIVU D5, D3
+0000218C                           118          
+0000218C  43F8 2067                119          LEA LINE5,A1 *LOAD LINE IN TO A1 REG
+00002190  103C 000E                120          MOVE.B #14,D0 *DISPLAY 
+00002194  4E4F                     121          TRAP #15
+00002196                           122          
+00002196                           123          
+00002196  3205                     124          MOVE.W D5,D1
+00002198  103C 0003                125          MOVE.B #3,D0 
+0000219C  4E4F                     126          TRAP #15
+0000219E                           127          
+0000219E  43F8 20B3                128          LEA PMT,A1  *CHANGE OUTPUT LINE
+000021A2  103C 000E                129          MOVE.B #14,D0 
+000021A6  4E4F                     130          TRAP #15
+000021A8                           131          
+000021A8                           132          
+000021A8                           133          
+000021A8  3407                     134          MOVE.W D7,D2
+000021AA                           135    
+000021AA  DC5D                     136  LOP4P   ADD (A5)+, D6
+000021AC  5342                     137          SUB #1, D2 *SUB 4 LOOP
+000021AE  66FA                     138          BNE LOP4P
+000021B0  8EC6                     139          DIVU D6, D7
+000021B2                           140          
+000021B2  43F8 2083                141          LEA LINE6,A1 *LOAD LINE IN TO A1 REG
+000021B6  103C 000E                142          MOVE.B #14,D0 *DISPLAY 
+000021BA  4E4F                     143          TRAP #15
+000021BC                           144          
+000021BC                           145          
+000021BC  3206                     146          MOVE.W D6,D1
+000021BE  103C 0003                147          MOVE.B #3,D0 
+000021C2  4E4F                     148          TRAP #15
+000021C4                           149          
+000021C4                           150          
+000021C4  DC45                     151          ADD D5,D6
+000021C6  383C 0014                152          MOVE.W #20, D4
+000021CA  88C6                     153          DIVU D6, D4
+000021CC                           154          
+000021CC  43F8 20B3                155          LEA PMT,A1  *CHANGE OUTPUT LINE
+000021D0  103C 000E                156          MOVE.B #14,D0 
+000021D4  4E4F                     157          TRAP #15
+000021D6                           158  
+000021D6                           159          
+000021D6  43F8 209F                160          LEA LINE7,A1 *LOAD LINE IN TO A1 REG
+000021DA  103C 000E                161          MOVE.B #14,D0 *DISPLAY 
+000021DE  4E4F                     162          TRAP #15
+000021E0                           163          
+000021E0                           164          
+000021E0  3206                     165          MOVE.W D6,D1
+000021E2  103C 0003                166          MOVE.B #3,D0 
+000021E6  4E4F                     167          TRAP #15
+000021E8                           168          
+000021E8                           169          
+000021E8                           170          
+000021E8                           171  
+000021E8                           172  
+000021E8                           173      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+FAIL                20FC
+LINE1               2000
+LINE2               200F
+LINE3               2029
+LINE4               2048
+LINE5               2067
+LINE6               2083
+LINE7               209F
+LOOPIN              20D2
+LOOPSR              20F0
+LOP4F               2184
+LOP4P               21AA
+PASS                210E
+PMT                 20B3
+START               20B6
+STOP                2120

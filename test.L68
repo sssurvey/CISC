@@ -1,0 +1,32 @@
+00007500 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 11/17/2015 8:06:34 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00007500                             7      ORG    $7500
+00007500                             8  START:                  ; first instruction of program
+00007500  3A7C 8001                  9      MOVE.W #$8001,A5
+00007504  33FC 00AB 00008001        10      MOVE.W #$AB, $8001
+0000750C  0355                      11      BCHG.B D1, (A5)
+0000750E                            12      
+0000750E                            13  
+0000750E                            14  
+0000750E  FFFF FFFF                 15      SIMHALT             ; halt simulator
+00007512                            16  
+00007512                            17  * Put variables and constants here
+00007512                            18  
+00007512                            19      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               7500

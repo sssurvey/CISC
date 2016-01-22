@@ -1,0 +1,32 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.00
+Created On: 11/16/2015 10:08:39 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : Mid 2 prac
+00000000                             3  * Written by : Haomin Shi
+00000000                             4  * Date       : 11-15-15
+00000000                             5  * Description: mid term 2nd practice
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8      
+00001000                             9  START:                  ; first instruction of program
+00001000                            10      
+00001000                            11     
+00001000  0352                      12      BCHG D1, (A2)
+00001002                            13      
+00001002                            14  
+00001002  FFFF FFFF                 15      SIMHALT             ; halt simulator
+00001006                            16  
+00001006                            17  
+00001006                            18  
+00001006                            19      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000
